@@ -4,10 +4,28 @@ This will get you set up to start using Terraform for your project.
 - - - -
 # Setup
 
-Make sure you have terraform, aws, and jq installed.
+Make sure you have terraform, aws, and jq installed. I am an Ansible guy, so I will be leveraging that to gpg verify/install Terraform for me. You can copy/paste this entire block.
 
-    sudo pip install --upgrade awscli
+    sudo pip install --upgrade awscli ansible
     sudo yum install -y jq
+	# https://github.com/pgporada/ansible-role-terraform
+	# ansible-galaxy installs roles to /etc/ansible/roles/
+	sudo ansible-galaxy install --force pgporada.terraform
+	cat << EOF > playbook.yml
+	---
+	- hosts: localhost
+	  connection: local
+	  vars:
+	    - vagrant_version: 0.9.8
+	  roles:
+	    - pgporada.terraform
+	...
+	EOF
+	ansible-playbook playbook.yml -b -K
+
+Verify you have your specified version of Terraform
+
+	terraform version
 
 I will not be working in the default AWS region so I must specify a --profile for `aws` commands. If you happen to be working out of the default region though, you can run
 
