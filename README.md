@@ -62,20 +62,35 @@ Fill out the environment tfvars data
 
 Configure initial terraform setup for the terraform-vpc project. I believe you should only ever have to do this once per project.
 
+    # Example vars
+    ##############
+    # AWS_REGION=us-east-2
+    # AWS_STATE_BUCKET=somebucket
+    # AWS_PROFILE=example
+    # AWS_KMS_ARN=arn:kms:666sdnfsdkljfn/345345/4nldfngkndfgfk
+    # ENVIRONMENT=prod
+
 	terraform init \
         -backend-config="region=${AWS_REGION}" \
         -backend-config="bucket=${AWS_STATE_BUCKET}" \
         -backend-config="profile=${AWS_PROFILE}" \
-        -backend-config="key=terraform/$(BUCKETKEY)/$(ENVIRONMENT).tfstate" \
+        -backend-config="key=terraform/vpc/${ENVIRONMENT}.tfstate" \
         -backend-config="encrypt=1" \
         -backend-config="acl=private" \
         -backend-config="kms_key_id=${AWS_KMS_ARN}"
 
 To see the result of the `terraform init`, you can cat out the state file.
 
-	cd terraform-vpc
 	cat .terraform/terraform.tfstate
 
-Run a plan
+Run a plan. A plan shows you what terraform thinks it should do based on the changes you've made to your `.tf` files and what terraform has stored in its state file.
 
-    terraform plan -var-far environments/example/example.tfvars
+    terraform plan -var-file environments/example/example.tfvars
+
+After eyeballing the plan and feeling confident, you can run an apply. THIS WILL BUILD STUFF!
+
+    terraform apply -var-file environments/example/example.tfvars
+
+To see that nothing else needs to be built, we can run a plan again.
+
+    terraform plan -var-file environments/example/example.tfvars
