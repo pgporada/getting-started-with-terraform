@@ -1,5 +1,5 @@
 # Overview
-This will get you set up to start using Terraform for your project.
+This will get you set up to start using Terraform for your project. What you choose to do with the underlaying infrastructure is your choice. I have used this Terraform code, combined with Ansible for provisioning data onto server, for over two years.
 
 - - - -
 # Setup
