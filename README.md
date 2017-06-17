@@ -2,7 +2,7 @@
 This will get you set up to start using Terraform for your project. What you choose to do with the underlaying infrastructure is your choice. I have used this Terraform code, combined with Ansible for provisioning data onto server, for over two years.
 
 - - - -
-# Setup
+# Getting started before you can actually get started
 
 Make sure you have terraform, aws, and jq installed. I am an Ansible guy, so I will be leveraging that to gpg verify/install Terraform for me. You can copy/paste this entire block.
 
@@ -44,6 +44,16 @@ If you have a bunch of keys and you forget what the KeyId was, you can loop thro
     for i in $(aws kms list-keys --profile ${AWS_PROFILE} | jq -r .Keys[].KeyId); do \
         aws kms describe-key --key-id $i --profile ${AWS_PROFILE} | grep -C10 Terraform | jq -r .KeyMetadata.KeyId; \
     done
+
+# Actually getting started
+- - - -
+### Overview
+We are going to be creating a VPC with X number of public/private subnets. We will also be creating a public/private route53 domain.
+
+### VPC
+Grab my `terraform-vpc` project from github! I encourage you to walk through the code. You can email me or leave an issue if you have questions.
+
+    git clone https://github.com/pgporada/terraform-vpc.git
 
 Fill out the environment tfvars data
 
