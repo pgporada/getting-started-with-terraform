@@ -8,24 +8,24 @@ Make sure you have terraform, aws, and jq installed. I am an Ansible guy, so I w
 
     sudo pip install --upgrade awscli ansible
     sudo yum install -y jq
-	# https://github.com/pgporada/ansible-role-terraform
-	# ansible-galaxy installs roles to /etc/ansible/roles/
-	sudo ansible-galaxy install --force pgporada.terraform
-	cat << EOF > playbook.yml
-	---
-	- hosts: localhost
-	  connection: local
-	  vars:
-	    - vagrant_version: 0.9.8
-	  roles:
-	    - pgporada.terraform
-	...
-	EOF
-	ansible-playbook playbook.yml -b -K
+    # https://github.com/pgporada/ansible-role-terraform
+    # ansible-galaxy installs roles to /etc/ansible/roles/
+    sudo ansible-galaxy install --force pgporada.terraform
+    cat << EOF > playbook.yml
+    ---
+    - hosts: localhost
+      connection: local
+      vars:
+        - vagrant_version: 0.9.8
+      roles:
+        - pgporada.terraform
+    ...
+    EOF
+    ansible-playbook playbook.yml -b -K
 
 Verify you have your specified version of Terraform
 
-	terraform version
+    terraform version
 
 I will not be working in the default AWS region so I must specify a --profile for `aws` commands. If you happen to be working out of the default region though, you can run
 
@@ -35,9 +35,10 @@ To start, we need an S3 bucket to store state. This bucket will NOT be managed b
 
     aws s3 mb s3://${AWS_BUCKET} --profile=${AWS_PROFILE}
 
-The next thing we'll need is a KMS key to encrypt state when it is stored in S3.
+The next thing we'll need is a KMS key to encrypt state when it is stored in S3. We'll also apply an alias so you can tell what the key is at a glance in the IAM web UI.
 
-    aws kms create-key --description="Terraform state encryption/decryption" --tags TagKey=Name,TagValue="terraform-state-key" --profile ${AWS_PROFILE} | jq -r .KeyMetadata.KeyId;
+    KEY=$(aws kms create-key --description="Terraform state encryption/decryption" --tags TagKey=Name,TagValue="terraform-state-key" --profile ${AWS_PROFILE} | jq -r .KeyMetadata.KeyId)
+    aws kms create-alias --alias-name alias/terraform-state-kms-key --target-key-id ${KEY} --profile=${AWS_PROFILE}
 
 If you have a bunch of keys and you forget what the KeyId was, you can loop through them as follows
 
@@ -70,7 +71,7 @@ Configure initial terraform setup for the terraform-vpc project. I believe you s
     # AWS_KMS_ARN=arn:kms:666sdnfsdkljfn/345345/4nldfngkndfgfk
     # ENVIRONMENT=prod
 
-	terraform init \
+    terraform init \
         -backend-config="region=${AWS_REGION}" \
         -backend-config="bucket=${AWS_STATE_BUCKET}" \
         -backend-config="profile=${AWS_PROFILE}" \
@@ -81,7 +82,7 @@ Configure initial terraform setup for the terraform-vpc project. I believe you s
 
 To see the result of the `terraform init`, you can cat out the state file.
 
-	cat .terraform/terraform.tfstate
+    cat .terraform/terraform.tfstate
 
 Run a plan. A plan shows you what terraform thinks it should do based on the changes you've made to your `.tf` files and what terraform has stored in its state file.
 
