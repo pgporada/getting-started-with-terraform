@@ -84,6 +84,10 @@ To see the result of the `terraform init`, you can cat out the state file.
 
     cat .terraform/terraform.tfstate
 
+We need to create a terraform environment on a _per terraform repository basis_. A terraform environment will allow us to split up distinct pieces of infrastructure. For example; dev_app1,staging_app1,prod_app1 and dev_app2,staging_app2,prod_app2
+
+    terraform env new dev_app1
+
 Run a plan. A plan shows you what terraform thinks it should do based on the changes you've made to your `.tf` files and what terraform has stored in its state file.
 
     terraform plan -var-file environments/example/example.tfvars
