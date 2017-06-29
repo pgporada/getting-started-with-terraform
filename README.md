@@ -1,7 +1,13 @@
 # Table of Contents
 1. [Overview](#overview)
-1. [Why Terraform?](#why_terraform?)
-1. [Getting Started](#getting_started)
+1. [Why Terraform?](#why-terraform)
+1. [Prep Work](#prep-work)
+1. [Getting Started](#getting-started)
+1. [Overview](#overview-1)
+1. [VPC](#vpc)
+1. [DNS](#dns)
+1. [Music](#theme-music)
+1. [Author Info and License](#author-info-and-license)
 
 - - - -
 # Overview
@@ -22,9 +28,9 @@ My answer to you is this
 * Written in Go so it's stupid fast and a tiny binary
 
 - - - -
-# Getting Started
+# Prep Work
 
-Make sure you have terraform, aws, and jq installed. I am an Ansible guy, so I will be leveraging that to gpg verify/install Terraform for me. You can copy/paste this entire block.
+Make sure you have terraform, aws, and jq installed. I am an Ansible guy, so I will be leveraging that to gpg verify/sha256sum/install Terraform for me. You can copy/paste this entire block.
 
     sudo pip install --upgrade awscli ansible
     sudo yum install -y jq
@@ -66,7 +72,7 @@ If you have a bunch of keys and you forget what the KeyId was, you can loop thro
         aws kms describe-key --key-id $i --profile ${AWS_PROFILE} | grep -C10 Terraform | jq -r .KeyMetadata.KeyId; \
     done
 
-# Actually getting started
+# Getting Started
 - - - -
 ### Overview
 We are going to be creating a VPC with X number of public/private subnets. We will also be creating a public/private route53 domain.
