@@ -1,6 +1,19 @@
 # Overview
 This will get you set up to start using Terraform for your project. What you choose to do with the underlaying infrastructure is your choice. I have used this Terraform code, combined with Ansible for provisioning data onto server, for over two years.
 
+# Why Terraform?
+You may be asking yourself, "Why would I want to use Terraform when I already have Salt/Chef/Ansible/Puppet/hand written scripts?"
+
+My answer to you is this
+
+* If I was a woodworker and needed to fell a tree, I would not pick up a small rip saw or chef knife. A rip saw and chef knife are wonderfully useful tools for the jobs they are best suited for. Can they still be used for this task? Absolutely, but why use an ill-suited tool for the job?
+* If I wanted to listen to a band such as Operation Ivy, I would go to YouTube and search for Operation Ivy instead of The Misfits. Sure, The Misfits are great and will satisfy my music listening needs, but they are ill-suited to be and play Operation Ivy songs.
+* The AWS and GCE Terraform providers are Hashicorps primary development focus for this tool. They will receive updates for new regions/zones/features far faster than an Ansible/Chef/Salt/Puppet release.
+* Can configure the underlying network that other tools expect to already exist
+* Shows changes in state such as adding/deleting a tag and shows cascading changes when making changes to any particular other object
+* You can populate your configation management tool of choice with variables fed straight from Terraform! This allows you to use config management in tandem with this tool to bootstrap nodes.
+* Written in Go so it's stupid fast and a tiny binary
+
 - - - -
 # Getting started before you can actually get started
 
@@ -16,7 +29,7 @@ Make sure you have terraform, aws, and jq installed. I am an Ansible guy, so I w
     - hosts: localhost
       connection: local
       vars:
-        - vagrant_version: 0.9.8
+        - vagrant_version: 0.9.9
       roles:
         - pgporada.terraform
     ...
@@ -99,3 +112,16 @@ After eyeballing the plan and feeling confident, you can run an apply. THIS WILL
 To see that nothing else needs to be built, we can run a plan again.
 
     terraform plan -var-file environments/example/example.tfvars
+
+### DNS
+
+Rinse repeat the VPC section but run `git clone https://github.com/pgporada/terraform-vpc.git` instead.
+
+- - - -
+# Theme Music
+[The Specials - Rat Race](https://www.youtube.com/watch?v=AmkMEoVb6rA)
+
+- - - -
+# Author Info and License
+GPLv3
+(C) [Phil Porada](https://philporada.com) 2017 - philporada@gmail.com
