@@ -53,6 +53,12 @@ Verify you have your specified version of Terraform
 
     terraform version
 
+We're going to pull down several repositories
+
+    git clone https://github.com/pgporada/terraform-vpc.git
+    git clone https://github.com/pgporada/terraform-dns.git
+    git clone https://github.com/pgporada/terraform-bastion.git
+
 I will not be working in the default AWS region so I must specify a --profile for `aws` commands. If you happen to be working out of the default region though, you can run
 
     export AWS_PROFILE=default
@@ -78,10 +84,6 @@ If you have a bunch of keys and you forget what the KeyId was, you can loop thro
 We are going to be creating a VPC with X number of public/private subnets. We will also be creating a public/private route53 domain.
 
 ### VPC
-Grab my `terraform-vpc` project from github! I encourage you to walk through the code. You can email me or leave an issue if you have questions.
-
-    git clone https://github.com/pgporada/terraform-vpc.git
-
 Fill out the environment tfvars data
 
     cd terraform-vpc
@@ -130,7 +132,9 @@ To see that nothing else needs to be built, we can run a plan again.
 
 Rinse repeat the VPC section but run `git clone https://github.com/pgporada/terraform-vpc.git` instead.
 
-#
+### Bastion
+
+Rinse repeat the VPC section but run `git clone https://github.com/pgporada/terraform-vpc.git` instead.
 
 - - - -
 # Theme Music
