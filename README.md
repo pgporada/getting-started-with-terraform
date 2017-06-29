@@ -1,6 +1,13 @@
+# Table of Contents
+1. [Overview](#overview)
+1. [Why Terraform?](#why_terraform?)
+1. [Getting Started](#getting_started)
+
+- - - -
 # Overview
 This will get you set up to start using Terraform for your project. What you choose to do with the underlaying infrastructure is your choice. I have used this Terraform code, combined with Ansible for provisioning data onto server, for over two years.
 
+- - - -
 # Why Terraform?
 You may be asking yourself, "Why would I want to use Terraform when I already have Salt/Chef/Ansible/Puppet/hand written scripts?"
 
@@ -15,7 +22,7 @@ My answer to you is this
 * Written in Go so it's stupid fast and a tiny binary
 
 - - - -
-# Getting started before you can actually get started
+# Getting Started
 
 Make sure you have terraform, aws, and jq installed. I am an Ansible guy, so I will be leveraging that to gpg verify/install Terraform for me. You can copy/paste this entire block.
 
@@ -116,6 +123,8 @@ To see that nothing else needs to be built, we can run a plan again.
 ### DNS
 
 Rinse repeat the VPC section but run `git clone https://github.com/pgporada/terraform-vpc.git` instead.
+
+#
 
 - - - -
 # Theme Music
