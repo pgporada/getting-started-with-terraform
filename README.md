@@ -4,8 +4,8 @@
 1. [Prep Work](#prep-work)
 1. [Getting Started](#getting-started)
 1. [Overview](#overview-1)
-  - [VPC](#vpc)
-  - [DNS](#dns)
+    - [VPC](#vpc)
+    - [DNS](#dns)
 1. [Music](#theme-music)
 1. [Author Info and License](#author-info-and-license)
 
