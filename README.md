@@ -63,9 +63,10 @@ I will not be working in the default AWS region so I must specify a --profile fo
 
     export AWS_PROFILE=default
 
-To start, we need an S3 bucket to store state. This bucket will NOT be managed by Terraform. This is the classic chicken and egg problem.
+To start, we need an S3 bucket to store state. This bucket will NOT be managed by Terraform. This is the classic chicken and egg problem. You can use either of the two commands to create a bucket
 
-    aws s3 mb s3://${AWS_BUCKET} --profile=${AWS_PROFILE}
+    aws s3 mb s3://${AWS_BUCKET} --profile=${AWS_PROFILE} --region=${AWS_REGION}
+    aws s3api create-bucket --bucket ${AWS_BUCKET} --region ${AWS_REGION} --profile ${AWS_PROFILE} --create-bucket-configuration LocationConstraint=${AWS_REGION}
 
 The next thing we'll need is a KMS key to encrypt state when it is stored in S3. We'll also apply an alias so you can tell what the key is at a glance in the IAM web UI.
 
